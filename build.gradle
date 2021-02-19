@@ -1,0 +1,18 @@
+buildscript {
+    ext {
+        compose_version = '1.0.0-alpha12'
+        kotlin_version = '1.4.30'
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.0-alpha06"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

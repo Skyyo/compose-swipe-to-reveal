@@ -1,0 +1,8 @@
+dependencyResolutionManagement {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+rootProject.name = "SwipeToReveal-Dismiss"
+include ':app'
