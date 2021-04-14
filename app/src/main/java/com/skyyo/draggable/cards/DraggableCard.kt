@@ -1,5 +1,6 @@
 package com.skyyo.draggable.cards
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -27,6 +28,7 @@ import kotlin.math.roundToInt
 
 const val ANIMATION_DURATION = 500
 
+@SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
 fun DraggableCard(
     card: CardModel,
@@ -42,16 +44,25 @@ fun DraggableCard(
             targetState = !isRevealed
         }
     }
-    val transition = updateTransition(transitionState)
-    val cardBgColor by transition.animateColor({ tween(durationMillis = ANIMATION_DURATION) }) {
-        if (isRevealed) cardExpandedBackgroundColor else cardCollapsedBackgroundColor
-    }
-    val offsetTransition by transition.animateFloat({ tween(durationMillis = ANIMATION_DURATION) }) {
-        if (isRevealed) cardOffset - offsetX.value else -offsetX.value
-    }
-    val cardElevation by transition.animateDp({ tween(durationMillis = ANIMATION_DURATION) }) {
-        if (isRevealed) 40.dp else 2.dp
-    }
+    val transition = updateTransition(transitionState, "cardTransition")
+    val cardBgColor by transition.animateColor(
+        label = "cardBgColorTransition",
+        transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
+        targetValueByState = {
+            if (isRevealed) cardExpandedBackgroundColor else cardCollapsedBackgroundColor
+        }
+    )
+    val offsetTransition by transition.animateFloat(
+        label = "cardOffsetTransition",
+        transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
+        targetValueByState = { if (isRevealed) cardOffset - offsetX.value else -offsetX.value },
+
+        )
+    val cardElevation by transition.animateDp(
+        label = "cardElevation",
+        transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
+        targetValueByState = { if (isRevealed) 40.dp else 2.dp }
+    )
 
     Card(
         modifier = Modifier
@@ -71,10 +82,7 @@ fun DraggableCard(
                         onCollapse()
                         return@detectHorizontalDragGestures
                     }
-                    change.consumePositionChange(
-                        consumedDx = newValue.x - original.x,
-                        consumedDy = 0f
-                    )
+                    change.consumePositionChange()
                     offsetX.value = newValue.x
                 }
             },
