@@ -69,16 +69,16 @@ fun DraggableCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(cardHeight)
-            .offset { IntOffset((offsetX.value + offsetTransition).roundToInt(), 0) }
+            .offset { IntOffset((offsetX.value - offsetTransition).roundToInt(), 0) }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     val original = Offset(offsetX.value, 0f)
                     val summed = original + Offset(x = dragAmount, y = 0f)
                     val newValue = Offset(x = summed.x.coerceIn(0f, cardOffset), y = 0f)
-                    if (newValue.x >= 10) {
+                    if (newValue.x <= 10) {
                         onExpand()
                         return@detectHorizontalDragGestures
-                    } else if (newValue.x <= 0) {
+                    } else if (newValue.x >= 0) {
                         onCollapse()
                         return@detectHorizontalDragGestures
                     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -15,12 +16,13 @@ import com.skyyo.draggable.R
 
 @Composable
 fun ActionsRow(
+    modifier: Modifier,
     actionIconSize: Dp,
     onDelete: () -> Unit,
     onEdit: () -> Unit,
     onFavorite: () -> Unit,
 ) {
-    Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+    Row(modifier) {
         IconButton(
             modifier = Modifier.size(actionIconSize),
             onClick = {
