@@ -25,7 +25,7 @@ fun CardsScreen(viewModel: CardsScreenViewModel) {
     val revealedCardIds = viewModel.revealedCardIdsList.collectAsState()
     Scaffold(backgroundColor = Color.White) {
         LazyColumn {
-            itemsIndexed(cards.value) { _, card ->
+            itemsIndexed(cards.value, key = { _, item -> item.id }) { _, card ->
                 Box(Modifier.fillMaxWidth()) {
                     ActionsRow(
                         actionIconSize = ACTION_ITEM_SIZE.dp,
@@ -33,7 +33,8 @@ fun CardsScreen(viewModel: CardsScreenViewModel) {
                         onEdit = {},
                         onFavorite = {}
                     )
-                    DraggableCard(
+                    //for advanced cases use DraggableCard
+                    DraggableCardSimple(
                         card = card,
                         isRevealed = revealedCardIds.value.contains(card.id),
                         cardHeight = CARD_HEIGHT.dp,
