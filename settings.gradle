@@ -1,8 +1,9 @@
 dependencyResolutionManagement {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "SwipeToReveal-Dismiss"
+rootProject.name = "compose swipe-to-reveal"
 include ':app'
