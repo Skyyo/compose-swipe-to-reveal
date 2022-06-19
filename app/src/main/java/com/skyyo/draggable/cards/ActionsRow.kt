@@ -23,9 +23,7 @@ fun ActionsRow(
     Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
         IconButton(
             modifier = Modifier.size(actionIconSize),
-            onClick = {
-                onDelete()
-            },
+            onClick = onDelete,
             content = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_bin),

@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        compose_version = '1.0.3'
-        kotlin_version = '1.5.30'
+        kotlin_version = '1.6.21'
+        compose_version = '1.2.0-beta03'
     }
     repositories {
         google()
@@ -9,7 +9,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

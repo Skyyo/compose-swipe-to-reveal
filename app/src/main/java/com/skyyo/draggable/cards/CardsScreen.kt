@@ -23,6 +23,7 @@ const val CARD_OFFSET = 168f // we have 3 icons in a row, so that's 56 * 3
 fun CardsScreen(viewModel: CardsScreenViewModel) {
     val cards = viewModel.cards.collectAsState()
     val revealedCardIds = viewModel.revealedCardIdsList.collectAsState()
+
     Scaffold(backgroundColor = Color.White) {
         LazyColumn {
             itemsIndexed(cards.value, key = { _, item -> item.id }) { _, card ->

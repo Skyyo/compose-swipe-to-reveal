@@ -88,7 +88,9 @@ fun DraggableCard(
                 }
             },
         backgroundColor = cardBgColor,
-        shape = RoundedCornerShape(0.dp),
+        shape = remember {
+            RoundedCornerShape(0.dp)
+        },
         elevation = cardElevation,
         content = { CardTitle(cardTitle = card.title) }
     )
@@ -144,7 +146,9 @@ fun DraggableCardSimple(
                 }
             },
         backgroundColor = cardBgColor,
-        shape = RoundedCornerShape(0.dp),
+        shape = remember {
+            RoundedCornerShape(0.dp)
+        },
         elevation = cardElevation,
         content = { CardTitle(cardTitle = card.title) }
     )
