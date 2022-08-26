@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,7 @@ const val MIN_DRAG_AMOUNT = 6
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
-fun DraggableCard(
+fun DraggableCardComplex(
     card: CardModel,
     cardHeight: Dp,
     isRevealed: Boolean,
@@ -83,7 +84,7 @@ fun DraggableCard(
                         onCollapse()
                         return@detectHorizontalDragGestures
                     }
-                    change.consumePositionChange()
+                    if (change.positionChange() != Offset.Zero) change.consume()
                     offsetX.value = newValue.x
                 }
             },
@@ -98,7 +99,7 @@ fun DraggableCard(
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
-fun DraggableCardSimple(
+fun DraggableCard(
     card: CardModel,
     cardHeight: Dp,
     isRevealed: Boolean,
