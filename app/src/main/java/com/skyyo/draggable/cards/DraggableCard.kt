@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.consumePositionChange
@@ -40,7 +37,7 @@ fun DraggableCardComplex(
     onExpand: () -> Unit,
     onCollapse: () -> Unit,
 ) {
-    val offsetX = remember { mutableStateOf(0f) }
+    var offsetX by remember { mutableStateOf(0f) }
     val transitionState = remember {
         MutableTransitionState(isRevealed).apply {
             targetState = !isRevealed
@@ -57,7 +54,7 @@ fun DraggableCardComplex(
     val offsetTransition by transition.animateFloat(
         label = "cardOffsetTransition",
         transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
-        targetValueByState = { if (isRevealed) cardOffset - offsetX.value else -offsetX.value },
+        targetValueByState = { if (isRevealed) cardOffset - offsetX else -offsetX },
 
         )
     val cardElevation by transition.animateDp(
@@ -71,10 +68,10 @@ fun DraggableCardComplex(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .height(cardHeight)
-            .offset { IntOffset((offsetX.value + offsetTransition).roundToInt(), 0) }
+            .offset { IntOffset((offsetX + offsetTransition).roundToInt(), 0) }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
-                    val original = Offset(offsetX.value, 0f)
+                    val original = Offset(offsetX, 0f)
                     val summed = original + Offset(x = dragAmount, y = 0f)
                     val newValue = Offset(x = summed.x.coerceIn(0f, cardOffset), y = 0f)
                     if (newValue.x >= 10) {
@@ -85,7 +82,7 @@ fun DraggableCardComplex(
                         return@detectHorizontalDragGestures
                     }
                     if (change.positionChange() != Offset.Zero) change.consume()
-                    offsetX.value = newValue.x
+                    offsetX = newValue.x
                 }
             },
         backgroundColor = cardBgColor,
